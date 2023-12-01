@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weither app</title>
+    <link rel="stylesheet" href="weither1.css">
+    <!-- <link rel="stylesheet" href="weather1.js"> -->
+
+</head>
+
+<body>
+    <div class="main">
+
+        <div class="box">
+            <div class="input-box">
+                <input type="text" id="search" placeholder="Enter the city" />
+                <button id="searchBox"  idonclick="checkWeather()">search</button>
+            </div>
+            <div class="body">
+                <img src="images/clouds.png" alt="">
+            </div>
+            <div class="temp">
+                <p id="temp">2°C</p>
+            </div>
+            <div class="city">
+                <p id="city">Delhi</p>
+            </div>
+            <div class="footer">
+                <div class="humidity">
+                    <img src="images/humidity.png" alt="">
+                    <p>Humidity</p>
+                    <p id="humidity">50%</p>
+
+
+                </div>
+                <div class="wind">
+                    <img src="images/wind.png" alt="">
+                    <p>Wind Speed</p>
+                    <p id="Wind Speed">50km/hr</p>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+
+</html>
+<script>
+
+    async function checkWeather() {
+        let name = document.getElementById("search").value;
+        console.log(name)
+        //console.log(name);
+        let apikey = `6f0ba1a3af80eb615641d3f0edf30a54`
+        //https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+        let responce = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${apikey}`)
+        let data = await responce.json();
+        console.log(data);
+
+
+        document.getElementById("temp").innerHTML = Math.floor(data.main.temp -273.15)+"°C";
+        document.getElementById("city").innerHTML =data.name;
+        document.getElementById("humidity").innerHTML = Math.floor(data.main.humidity)+"%";
+        document.getElementById("Wind Speed").innerHTML = Math.floor(data.wind.speed)
+        +"km/h";
+
+        
+     }
+     document.getElementById("search").addEventListener("keypress", function(event) {
+    if (event.keyCode === 13) {
+       
+        checkWeather();
+    }
+});
+
+</script>

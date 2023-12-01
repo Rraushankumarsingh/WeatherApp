@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotstar2</title>
+</head>
+
+<body>
+    <h3>hello</h3>
+    <input type="text" placeholder="enter a name" id="input" oninput="debounce(showData(),2000)">
+<div>
+    <img src="https://static.digit.in/OTT/v2/images/super-30-165700.jpg">
+</div>
+    <div id="card"></div>
+</body>
+
+</html>
+<script>
+    var movies = document.getElementById("card")
+    let id;
+    //let apikey=`9f1a2bc9ed69d13ee3d524b4c7737377`
+    //let url='https://api.themoviedb.org/3/movie/11?api_key=9f1a2bc9ed69d13ee3d524b4c7737377'
+    async function hotstarData() {
+        let name = document.getElementById("input").value;
+        let responce = await fetch(`https://api.themoviedb.org/3/movie/11?api_key=9f1a2bc9ed69d13ee3d524b4c7737377&q=${name}`)
+        //console.log(name);
+        let responceData = await responce.json()
+        //console.log(responceData);
+        // console.log("hello");
+        return responceData.belongs_to_collection
+
+    }
+    async function showData() {
+        movies.innerHTML=null
+        let data = await hotstarData()
+       // console.log(data);
+        data.map(function(data) 
+        {
+            console.log(data);
+            let img = document.createElement("img");
+            img.src = moviesData.poster_path;
+            let id = document.createElement("p");
+            id.innerHTML = moviesData.id;
+            let name = document.createElement("p");
+            name.innerHTML = moviesData.name;
+
+            movies.append(img, id, name)
+
+
+        })
+    }
+    function debounce(fun, time) {
+        clearTimeout(id)
+        id = setTimeout(function()
+         {
+            fun()
+        },time)
+    }
+</script>
